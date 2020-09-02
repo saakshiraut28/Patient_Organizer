@@ -97,7 +97,7 @@ void add_patients(){
 		scanf("%s", details.doctor);
 		//creates & stores the details in "store_data.txt"
 		store_info = fopen("store_data.txt", "a");
-		fprintf(store_info, " %d \t%s\t %s\t %d\t %s \t%s \t%s \t%s \t%s \%s\n",details.id, details.name,details.last_name, details.age, details.contact, details.email, details.address, details.symptoms,details.disease, details.doctor);
+		fprintf(store_info, " %d \t%s\t %s\t %d\t %s \t%s \t%s \t%s \t%s \t%s\n",details.id, details.name,details.last_name, details.age, details.contact, details.email, details.address, details.symptoms,details.disease, details.doctor);
 	    fclose(store_info);
 	 	printf("\nDo you want to continue (1 for yes/ 2 for no): ");
 	 	scanf("%d",&choice);
