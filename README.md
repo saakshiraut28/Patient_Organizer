@@ -1,12 +1,12 @@
 # Patient_Organizer
 A program to organize patients in any clinic.
-# PROJECT OBJECTIVES :\n
+# PROJECT OBJECTIVES :
 ● To computerize all the details
-related to patients.\n
+related to patients.<br/>
 ● To maintain records
-effectively.\n
+effectively.<br/>
 ● To handle the process of ward
-entries.\n
+entries.<br/>
 ● The project has information
 regarding patient details, and
-report generations.\n
+report generations.<br/>
