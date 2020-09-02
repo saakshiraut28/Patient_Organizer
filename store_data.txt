@@ -1,0 +1,7 @@
+
+1 	Saakshi	 Raut	 17	 8275738248 	sak@gmail.com 	Nashik 	Coughing 	Cancer Smr
+2 	Shreya	 Sahane	 17	 7895623568 	shrya@gmail.com 	Nashik 	None 	None Smr
+3 	Rutuja	 Pawar	 17	 4562369853 	rutu@gmail.com 	Nashik 	none 	none Smr
+4 	Anuj	 Barve	 17	 4698788965 	anuj@gmail.com 	Nashik 	none 	none Smr
+
+1 	Saakshi	 Raut	 17	 8256983566 	sakshi@gmail.com 	Nashik 	Coughing 	Cancer 	Smr
