@@ -1,5 +1,4 @@
 
-
 /******************************************************************************
 DSU Microproject : Database to organize patients in clinic
 *******************************************************************************/
@@ -14,7 +13,7 @@ struct patients
 	char name[20], last_name[20], email[20], address[40], contact[12], symptoms[45], disease[20], doctor[20];
 	int age, id;
 } details, new_details;
-int id = 0;
+
 
 struct covid_patients
 {
@@ -22,15 +21,6 @@ struct covid_patients
 	int age, id;
 } covid_details, new_details_covid;
 
-//functions dec
-void welcome();
-void main_menu();
-void add_patients();
-void edit();
-void list_all();
-void view_rec_id();
-void report();
-void exit_function();
 //main func
 int main()
 {
@@ -45,7 +35,8 @@ void main_main_menu()
 
 	int choice;
 	system("cls");
-	printf("\n\t\t\t MAIN MAIN MENU");
+	welcome();
+	printf("\n\n\t\t\t MAIN MAIN MENU");
 	printf("\n\n\t Contents: ");
 	printf("\n\n\t 1. Main Menu of Normal Patients. ");
 	printf("\n\n\t 2. Main Menu of Covid Patients . ");
@@ -109,7 +100,94 @@ void welcome()
 	printf("\n\t\t\tCure 'N Care.");
 	printf("\n\tAddress: Cure 'n Care, Devlali-camp, Nashik Rd, Nashik-422 401'");
 	printf("\n\t\tContact: 8236945789\tPhone no: 0253 - 2490503.");
-	printf("\n______________________________________________________________________________________________________________________________");
+	printf("\n______________________________________________________________________________________________________________________________\n\n\n");
+}
+
+
+//registers new patients
+void add_patients()
+{
+	system("cls");
+	welcome();
+	int choice,last_id;
+	//for generation of next id number;
+	FILE *store_info,*read_info,*read_data;
+    read_data= fopen("store_data.txt","r");
+    while(fscanf(read_data, "%d %s %s %d %s %s %s %s %s %s\n", &details.id, details.name, details.last_name, &details.age, details.contact, details.email, details.address, details.symptoms, details.disease, details.doctor)!=EOF){
+	last_id = details.id;
+		}
+		printf("\n\n\t\tYOUR ID IS : %d ",++last_id);
+registration: //label for goto statement at end of the func.
+	printf("\n\n\t Enter the following details :");
+	printf("\nID: ");
+	scanf("%d", &details.id);
+	printf("\nFirst_Name: ");
+	scanf("%s", details.name);
+	printf("\nLast_Name: ");
+	scanf("%s", details.last_name);
+	printf("\nAge: ");
+	scanf("%d", &details.age);
+	printf("\nContact no. : ");
+	scanf("%s", details.contact);
+	if (strlen(details.contact) > 10)
+	{
+		printf("\nYou can only store 10 digits..\n");
+		printf("\n*Please enter again \nContact no. : ");
+		scanf("%s", details.contact);
+	}
+	printf("\nE-mail id: ");
+	scanf("%s", details.email);
+	printf("\nAddress: ");
+	scanf("%s", details.address);
+	printf("\nSymptoms: ");
+	scanf("%s", details.symptoms);
+	printf("\nDisease: ");
+	scanf("%s", details.disease);
+	printf("\nDoctor Consulted: ");
+	scanf("%s", details.doctor);
+	//creates & stores the details in "store_data.txt"
+	store_info = fopen("store_data.txt", "a");
+	fprintf(store_info, " %d \t%s\t %s\t %d\t %s \t%s \t%s \t%s \t%s \t%s\n", details.id, details.name, details.last_name, details.age, details.contact, details.email, details.address, details.symptoms, details.disease, details.doctor);
+	printf("\nRecord saved as:\n");
+	printf(" %d \t%s\t %s\t %d\t %s \t%s \t%s \t%s \t%s \t%s\n", details.id, details.name, details.last_name, details.age, details.contact, details.email, details.address, details.symptoms, details.disease, details.doctor);
+	fclose(store_info);
+	printf("\nDo you want to continue (1 for yes/ 2 for no): ");
+	scanf("%d", &choice);
+	switch (choice)
+	{
+	case 1:
+		goto registration;
+	case 2:
+		main_menu();
+	default:
+		printf("Error occurred..:(:(");
+	}
+}
+
+//displays the list of all patients with their details
+void list_all()
+{
+	int choice;
+	system("cls");
+	welcome();
+	FILE *read_data;
+	read_data = fopen("store_data.txt", "r");
+	while (fscanf(read_data, "%d %s %s %d %s %s %s %s %s %s\n", &details.id, details.name, details.last_name, &details.age, details.contact, details.email, details.address, details.symptoms, details.disease, details.doctor) != EOF)
+	{
+		printf("\nID: %d\t", details.id);
+		printf("\tName: %s\t\t", details.name);
+		printf("Last_Name: %s\t\t", details.last_name);
+		printf("Age: %d\t\t", details.age);
+		printf("Contacts: %s\t\t", details.contact);
+		printf("Email id: %s\t\t", details.email);
+		printf("Address: %s\n", details.address);
+		printf("Symptoms: %s\t\t", details.symptoms);
+		printf("Diseases: %s\t\t", details.disease);
+		printf("Doctor Consulted: %s\t\t\n", details.doctor);
+	}
+	fclose(read_data);
+	getch();
+	main_menu();
 }
 
 //for updation of a record
@@ -138,7 +216,7 @@ void edit()
 			printf("\n%d %s\t %s\t %d\t %s \t%s \t%s \t%s \t%s \t%s\n", details.id, details.name, details.last_name, details.age, details.contact, details.email, details.address, details.symptoms, details.disease, details.doctor);
 			printf("\n\n*Enter new details*"); //gets new details of patients
 			printf("\nID: ");				   //Id remains the same ..No need to enter again
-			printf("\n%d", details.id);
+			printf("\t%d", details.id);
 			printf("\nEnter your name: ");
 			scanf("%s", details.name);
 			printf("\nLast_name: ");
@@ -176,10 +254,6 @@ void edit()
 				printf("\nAn error occurred.");
 			}
 		}
-		//And This else statement isn't working...Even when it has a previous if
-		/*else{
-				printf("\nRecord not found..:(\n Check your id no. ..");
-	        }*/
 	}
 x:
 	fclose(read);
@@ -187,86 +261,6 @@ x:
 	getch();
 	main_menu();
 }
-
-//registers new patients
-void add_patients()
-{
-	system("cls");
-	welcome();
-	int choice;
-	FILE *store_info;
-registration: //label for goto statement at end of the func.
-			  //Inputs details of patients
-	printf("\n Enter the following details :");
-	printf("\nID: ");
-	scanf("%d", &details.id);
-	printf("\nFirst_Name: ");
-	scanf("%s", details.name);
-	printf("\nLast_Name: ");
-	scanf("%s", details.last_name);
-	printf("\nAge: ");
-	scanf("%d", &details.age);
-	printf("\nContact no. : ");
-	scanf("%s", details.contact);
-	if (strlen(details.contact) > 10)
-	{
-		printf("\nYou can only store 10 digits..\n");
-		printf("\n*Please enter again \nContact no. : ");
-		scanf("%s", details.contact);
-	}
-	printf("\nE-mail id: ");
-	scanf("%s", details.email);
-	printf("\nAddress: ");
-	scanf("%s", details.address);
-	printf("\nSymptoms: ");
-	scanf("%s", details.symptoms);
-	printf("\nDisease: ");
-	scanf("%s", details.disease);
-	printf("\nDoctor Consulted: ");
-	scanf("%s", details.doctor);
-	//creates & stores the details in "store_data.txt"
-	store_info = fopen("store_data.txt", "a");
-	fprintf(store_info, " %d \t%s\t %s\t %d\t %s \t%s \t%s \t%s \t%s \t%s\n", details.id, details.name, details.last_name, details.age, details.contact, details.email, details.address, details.symptoms, details.disease, details.doctor);
-	fclose(store_info);
-	printf("\nDo you want to continue (1 for yes/ 2 for no): ");
-	scanf("%d", &choice);
-	switch (choice)
-	{
-	case 1:
-		goto registration;
-	case 2:
-		exit_function();
-	default:
-		printf("Error occurred..:(:(");
-	}
-}
-
-//displays the list of all patients with their details
-void list_all()
-{
-	int choice;
-	system("cls");
-	welcome();
-	FILE *read_data;
-	read_data = fopen("store_data.txt", "r");
-	while (fscanf(read_data, "%d %s %s %d %s %s %s %s %s %s\n", &details.id, details.name, details.last_name, &details.age, details.contact, details.email, details.address, details.symptoms, details.disease, details.doctor) != EOF)
-	{
-		printf("\nID: %d\t", details.id);
-		printf("\tName: %s\t", details.name);
-		printf("Last_Name: %s\t", details.last_name);
-		printf("Age: %d\t", details.age);
-		printf("Contacts: %s\t", details.contact);
-		printf("Email id: %s\t", details.email);
-		printf("Address: %s\n", details.address);
-		printf("Symptoms: %s\t", details.symptoms);
-		printf("Diseases: %s\t", details.disease);
-		printf("Doctor Consulted: %s\t\n", details.doctor);
-	}
-	fclose(read_data);
-	getch();
-	main_menu();
-}
-
 void view_rec_id()
 {
 	FILE *read; // both of them points to same file, but opens them in diff mode
@@ -416,20 +410,8 @@ void report()
 	getch();
 	main_menu();
 }
-//Exit fun ..You may improve this one. I haven't work that much on this function..
+//Exit fun ..
 
-void exit_function()
-{
-	system("cls");
-	printf("\n\n\n\t\t\t_____________________________________________________________________________________________________\n");
-	printf("\t\t\t|  _______________________________________________________________________________________________  |\n");
-	printf("\t\t\t| |                                                                                               | |\n");
-	printf("\t\t\t| |                                     Thanks for visiting..:)                                   | |\n");
-	printf("\t\t\t| |_______________________________________________________________________________________________| |\n");
-	printf("\t\t\t|___________________________________________________________________________________________________|\n");
-	getch;
-	return 0;
-}
 
 //----------------------------------------------------------------------------------------------X---------------------------------------------------------------------------------------------//
 
@@ -500,7 +482,7 @@ void covid_edit()
 			printf("\n%d %s\t %s\t %d\t %s \t%s \t%s \t%s \t%s \t%s\n", covid_details.id, covid_details.name, covid_details.last_name, covid_details.age, covid_details.contact, covid_details.email, covid_details.address, covid_details.symptoms, covid_details.disease, covid_details.doctor);
 			printf("\n\n*Enter new covid_details*"); //gets new covid_details of patients
 			printf("\nID: ");						 //Id remains the same ..No need to enter again
-			printf("\n%d", covid_details.id);
+			printf("\t%d", covid_details.id);
 			printf("\nEnter your name: ");
 			scanf("%s", covid_details.name);
 			printf("\nLast_name: ");
@@ -538,10 +520,6 @@ void covid_edit()
 				printf("\nAn error occurred.");
 			}
 		}
-		//And This else statement isn't working...Even when it has a previous if
-		/*else{
-				printf("\nRecord not found..:(\n Check your id no. ..");
-	        }*/
 	}
 x:
 	fclose(read);
@@ -555,11 +533,19 @@ void covid_add_patients()
 {
 	system("cls");
 	welcome();
-	int choice;
-	FILE *store_info;
+	int choice, last_id;
+	FILE *store_info,*read_data;
+		//for generation of next id number;
+
+    read_data= fopen("store_data_covid.txt","r");
+    while(fscanf(read_data, "%d %s %s %d %s %s %s %s %s %s\n", &covid_details.id, covid_details.name, covid_details.last_name, &covid_details.age, covid_details.contact, covid_details.email, covid_details.address, covid_details.symptoms,covid_details.disease, covid_details.doctor)!=EOF){
+	last_id = covid_details.id;
+	
+		}
+		printf("\n\n\t\tYOUR ID IS : %d ",++last_id);
 registration: //label for goto statement at end of the func.
 			  //Inputs covid_details of patients
-	printf("\n Enter the following covid_details :");
+	printf("\n\n Enter the following details :");
 	printf("\nID: ");
 	scanf("%d", &covid_details.id);
 	printf("\nFirst_Name: ");
@@ -586,7 +572,7 @@ registration: //label for goto statement at end of the func.
 	scanf("%s", covid_details.disease);
 	printf("\nDoctor Consulted: ");
 	scanf("%s", covid_details.doctor);
-	//creates & stores the covid_details in "store_data.txt"
+	//creates & stores the covid_details in "store_data_covid.txt"
 	store_info = fopen("store_data_covid.txt", "a");
 	fprintf(store_info, " %d \t%s\t %s\t %d\t %s \t%s \t%s \t%s \t%s \t%s\n", covid_details.id, covid_details.name, covid_details.last_name, covid_details.age, covid_details.contact, covid_details.email, covid_details.address, covid_details.symptoms, covid_details.disease, covid_details.doctor);
 	fclose(store_info);
@@ -597,7 +583,7 @@ registration: //label for goto statement at end of the func.
 	case 1:
 		goto registration;
 	case 2:
-		exit_function();
+	 	covid_main_menu();
 	default:
 		printf("Error occurred..:(:(");
 	}
@@ -613,15 +599,15 @@ void covid_list_all()
 	read_data = fopen("store_data_covid.txt", "r");
 	while (fscanf(read_data, "%d %s %s %d %s %s %s %s %s %s\n", &covid_details.id, covid_details.name, covid_details.last_name, &covid_details.age, covid_details.contact, covid_details.email, covid_details.address, covid_details.symptoms, covid_details.disease, covid_details.doctor) != EOF)
 	{
-		printf("\nID: %d\t", covid_details.id);
-		printf("\tName: %s\t", covid_details.name);
-		printf("Last_Name: %s\t", covid_details.last_name);
-		printf("Age: %d\t", covid_details.age);
-		printf("Contacts: %s\t", covid_details.contact);
-		printf("Email id: %s\t", covid_details.email);
+		printf("\nID: %d\t\t", covid_details.id);
+		printf("Name: %s\t\t", covid_details.name);
+		printf("Last_Name: %s\t\t", covid_details.last_name);
+		printf("Age: %d\t\t", covid_details.age);
+		printf("Contacts: %s\t\t", covid_details.contact);
+		printf("Email id: %s\t\t", covid_details.email);
 		printf("Address: %s\n", covid_details.address);
-		printf("Symptoms: %s\t", covid_details.symptoms);
-		printf("Diseases: %s\t", covid_details.disease);
+		printf("Symptoms: %s\t\t", covid_details.symptoms);
+		printf("Diseases: %s\t\t", covid_details.disease);
 		printf("Doctor Consulted: %s\t\n", covid_details.doctor);
 	}
 	fclose(read_data);
@@ -778,4 +764,17 @@ void covid_report()
 	fclose(read);
 	getch();
 	main_menu();
+}
+void exit_function()
+{
+	system("cls");
+	welcome();
+	printf("\n\n\n\t\t\t_____________________________________________________________________________________________________\n");
+	printf("\t\t\t|  _______________________________________________________________________________________________  |\n");
+	printf("\t\t\t| |                                                                                               | |\n");
+	printf("\t\t\t| |                                     Thanks for visiting..:)                                   | |\n");
+	printf("\t\t\t| |_______________________________________________________________________________________________| |\n");
+	printf("\t\t\t|___________________________________________________________________________________________________|\n\n\n\n");
+	system("pause");
+	return 0;
 }
