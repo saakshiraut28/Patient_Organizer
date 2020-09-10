@@ -116,11 +116,10 @@ void add_patients()
     while(fscanf(read_data, "%d %s %s %d %s %s %s %s %s %s\n", &details.id, details.name, details.last_name, &details.age, details.contact, details.email, details.address, details.symptoms, details.disease, details.doctor)!=EOF){
 	last_id = details.id;
 		}
-		printf("\n\n\t\tYOUR ID IS : %d ",++last_id);
-registration: //label for goto statement at end of the func.
+    registration: //label for goto statement at end of the func.
+	printf("\n\n\t\tYOUR ID IS : %d ",++last_id);
+    details.id = last_id;
 	printf("\n\n\t Enter the following details :");
-	printf("\nID: ");
-	scanf("%d", &details.id);
 	printf("\nFirst_Name: ");
 	scanf("%s", details.name);
 	printf("\nLast_Name: ");
@@ -540,14 +539,13 @@ void covid_add_patients()
     read_data= fopen("store_data_covid.txt","r");
     while(fscanf(read_data, "%d %s %s %d %s %s %s %s %s %s\n", &covid_details.id, covid_details.name, covid_details.last_name, &covid_details.age, covid_details.contact, covid_details.email, covid_details.address, covid_details.symptoms,covid_details.disease, covid_details.doctor)!=EOF){
 	last_id = covid_details.id;
-	
+
 		}
-		printf("\n\n\t\tYOUR ID IS : %d ",++last_id);
 registration: //label for goto statement at end of the func.
 			  //Inputs covid_details of patients
+    printf("\n\n\t\tYOUR ID IS : %d ",++last_id);
 	printf("\n\n Enter the following details :");
-	printf("\nID: ");
-	scanf("%d", &covid_details.id);
+	covid_details.id = last_id;
 	printf("\nFirst_Name: ");
 	scanf("%s", covid_details.name);
 	printf("\nLast_Name: ");
@@ -778,3 +776,4 @@ void exit_function()
 	system("pause");
 	return 0;
 }
+
