@@ -7,19 +7,12 @@ DSU Microproject : Database to organize patients in clinic
 #include <stdlib.h>
 #include <stdbool.h>
 #include <conio.h>
-//structure dec ..Objects:details, new_details
+//structure dec ..Objects:details, new_details, covid_details, new_details_covid
 struct patients
 {
 	char name[20], last_name[20], email[20], address[40], contact[12], symptoms[45], disease[20], doctor[20];
 	int age, id;
-} details, new_details;
-
-
-struct covid_patients
-{
-	char name[20], last_name[20], email[20], address[40], contact[12], symptoms[45], disease[20], doctor[20];
-	int age, id;
-} covid_details, new_details_covid;
+} details, new_details, covid_details, new_details_covid;
 
 //main func
 int main()
