@@ -1,4 +1,3 @@
-
 /******************************************************************************
 DSU Microproject : Database to organize patients in clinic
 *******************************************************************************/
@@ -10,7 +9,7 @@ DSU Microproject : Database to organize patients in clinic
 //structure dec ..Objects:details, new_details, covid_details, new_details_covid
 struct patients
 {
-	char name[20], last_name[20], email[20], address[40], contact[12], symptoms[45], disease[20], doctor[20];
+	char name[20], last_name[20], email[30], address[40], contact[12], symptoms[45], disease[20], doctor[20];
 	int age, id;
 } details, new_details, covid_details, new_details_covid;
 
@@ -60,7 +59,7 @@ void main_menu()
 	printf("\n\n\t 4. Generate Report ");
 	printf("\n\n\t 5. View Record by ID ");
 	printf("\n\n\t 6. Exit");
-	printf("\n\n\t\t\t Enter your choice(only enter the number of the task to be performed): ");
+	printf("\n\n\t\t\t Enter your choice (Numerical values expected): ");
 	scanf("%d", &choice);
 	switch (choice)
 	{
@@ -102,7 +101,7 @@ void add_patients()
 {
 	system("cls");
 	welcome();
-	int choice,last_id;
+	int choice,last_id,count=0;
 	//for generation of next id number;
 	FILE *store_info,*read_info,*read_data;
     read_data= fopen("store_data.txt","r");
@@ -119,18 +118,31 @@ void add_patients()
 	scanf("%s", details.last_name);
 	printf("\nAge: ");
 	scanf("%d", &details.age);
-	printf("\nContact no. : ");
+	printf("\nContact no.: ");
 	scanf("%s", details.contact);
-	if (strlen(details.contact) > 10)
+	if((strlen(details.contact)<10)||(strlen(details.contact)>12))
 	{
-		printf("\nYou can only store 10 digits..\n");
-		printf("\n*Please enter again \nContact no. : ");
+		printf("\nInvalid Contact Number :( \n*Please Try again: \nContact Number: ");
 		scanf("%s", details.contact);
 	}
 	printf("\nE-mail id: ");
 	scanf("%s", details.email);
+	for(int i=1;i<20;i++){
+		if(details.email[i]=='@'){
+			count++;
+		}
+	}
+	if(count==0){
+		printf("\nInvalid Email ID :( \n*Please Try again: \nEmail-id: ");
+		scanf("%s", details.email);
+	}
 	printf("\nAddress: ");
 	scanf("%s", details.address);
+	for(int i=0;i<50;i++){
+		if(details.address[i]==' '){
+			continue;
+		}
+	}
 	printf("\nSymptoms: ");
 	scanf("%s", details.symptoms);
 	printf("\nDisease: ");
@@ -166,16 +178,16 @@ void list_all()
 	read_data = fopen("store_data.txt", "r");
 	while (fscanf(read_data, "%d %s %s %d %s %s %s %s %s %s\n", &details.id, details.name, details.last_name, &details.age, details.contact, details.email, details.address, details.symptoms, details.disease, details.doctor) != EOF)
 	{
-		printf("\nID: %d\t", details.id);
-		printf("\tName: %s\t\t", details.name);
-		printf("Last_Name: %s\t\t", details.last_name);
-		printf("Age: %d\t\t", details.age);
-		printf("Contacts: %s\t\t", details.contact);
-		printf("Email id: %s\t\t", details.email);
-		printf("Address: %s\n", details.address);
-		printf("Symptoms: %s\t\t", details.symptoms);
-		printf("Diseases: %s\t\t", details.disease);
-		printf("Doctor Consulted: %s\t\t\n", details.doctor);
+		printf("\n\tID: %d\t", details.id);
+		printf("\n\t\tName: %s\t\t", details.name);
+		printf("\n\t\tLast_Name: %s\t\t", details.last_name);
+		printf("\n\t\tAge: %d\t\t", details.age);
+		printf("\n\t\tContacts: %s\t\t", details.contact);
+		printf("\n\t\tEmail id: %s\t\t", details.email);
+		printf("\n\t\tAddress: %s", details.address);
+		printf("\n\t\tSymptoms: %s\t\t", details.symptoms);
+		printf("\n\t\tDiseases: %s\t\t", details.disease);
+		printf("\n\t\tDoctor Consulted: %s\t\t\n", details.doctor);
 	}
 	fclose(read_data);
 	getch();
@@ -203,7 +215,7 @@ void edit()
 	while (fscanf(read, "\n%d \t%s\t %s\t %d\t %s \t%s \t%s \t%s \t%s \t%s\n", &details.id, details.name, details.last_name, &details.age, details.contact, details.email, details.address, details.symptoms, details.disease, details.doctor) != EOF)
 	{
 		if (details.id == patient_id)
-		{
+		{	
 			printf("\nORIGINAL RECORD OF PATIENT..");
 			printf("\n%d %s\t %s\t %d\t %s \t%s \t%s \t%s \t%s \t%s\n", details.id, details.name, details.last_name, details.age, details.contact, details.email, details.address, details.symptoms, details.disease, details.doctor);
 			printf("\n\n*Enter new details*"); //gets new details of patients
@@ -386,7 +398,7 @@ void report()
 				printf("\t\t\t| |   ##        ##   ## ##   ##                   | |  Consultation                    4000       | |\n");
 				printf("\t\t\t| |   ##        ##    ####   ##                   | |  Critical Care                   3000       | |\n");
 				printf("\t\t\t| |   ########  ##      ##   ########             | |_____________________________________________| |\n");
-				printf("\t\t\t| |   Cure        N          Care      Clinic     | |  Total                           15000/-    | |\n");
+				printf("\t\t\t| |   Cure        N          Care                 | |  Total                           15000/-    | |\n");
 				printf("\t\t\t| |_______________________________________________| |_____________________________________________| |\n");
 				printf("\t\t\t|___________________________________________________________________________________________________|\n");
 				printf("\n%d %s \t%s \t%d \t%s \t%s \t%s \t%s \t%s \t%s\n", details.id, details.name, details.last_name, details.age, details.contact, details.email, details.address, details.symptoms, details.disease, details.doctor);
@@ -421,7 +433,7 @@ void covid_main_menu()
 	printf("\n\n\t 4. Generate Report ");
 	printf("\n\n\t 5. View Record by ID ");
 	printf("\n\n\t 6. Exit");
-	printf("\n\n\t\t\t Enter your choice(only enter the number of the task to be performed): ");
+	printf("\n\n\t\t\t Enter your choice(Integer value expected): ");
 	scanf("%d", &choice);
 	switch (choice)
 	{
@@ -590,16 +602,16 @@ void covid_list_all()
 	read_data = fopen("store_data_covid.txt", "r");
 	while (fscanf(read_data, "%d %s %s %d %s %s %s %s %s %s\n", &covid_details.id, covid_details.name, covid_details.last_name, &covid_details.age, covid_details.contact, covid_details.email, covid_details.address, covid_details.symptoms, covid_details.disease, covid_details.doctor) != EOF)
 	{
-		printf("\nID: %d\t\t", covid_details.id);
-		printf("Name: %s\t\t", covid_details.name);
-		printf("Last_Name: %s\t\t", covid_details.last_name);
-		printf("Age: %d\t\t", covid_details.age);
-		printf("Contacts: %s\t\t", covid_details.contact);
-		printf("Email id: %s\t\t", covid_details.email);
-		printf("Address: %s\n", covid_details.address);
-		printf("Symptoms: %s\t\t", covid_details.symptoms);
-		printf("Diseases: %s\t\t", covid_details.disease);
-		printf("Doctor Consulted: %s\t\n", covid_details.doctor);
+		printf("\n\tID: %d\t\t", covid_details.id);
+		printf("\n\t\tName: %s\t\t", covid_details.name);
+		printf("\n\t\tLast_Name: %s\t\t", covid_details.last_name);
+		printf("\n\t\tAge: %d\t\t", covid_details.age);
+		printf("\n\t\tContacts: %s\t\t", covid_details.contact);
+		printf("\n\t\tEmail id: %s\t\t", covid_details.email);
+		printf("\n\t\tAddress: %s", covid_details.address);
+		printf("\n\t\tSymptoms: %s\t\t", covid_details.symptoms);
+		printf("\n\t\tDiseases: %s\t\t", covid_details.disease);
+		printf("\n\t\tDoctor Consulted: %s\t\n", covid_details.doctor);
 	}
 	fclose(read_data);
 	getch();
@@ -740,7 +752,7 @@ void covid_report()
 				printf("\t\t\t| |   ##        ##   ## ##   ##                   | |  Consultation                    4000       | |\n");
 				printf("\t\t\t| |   ##        ##    ####   ##                   | |  Critical Care                   3000       | |\n");
 				printf("\t\t\t| |   ########  ##      ##   ########             | |_____________________________________________| |\n");
-				printf("\t\t\t| |   Cure        N          Care      Clinic     | |  Total                           15000/-    | |\n");
+				printf("\t\t\t| |   Cure        N          Care      			| |  Total                           15000/-    | |\n");
 				printf("\t\t\t| |_______________________________________________| |_____________________________________________| |\n");
 				printf("\t\t\t|___________________________________________________________________________________________________|\n");
 				printf("\n%d %s \t%s \t%d \t%s \t%s \t%s \t%s \t%s \t%s\n", covid_details.id, covid_details.name, covid_details.last_name, covid_details.age, covid_details.contact, covid_details.email, covid_details.address, covid_details.symptoms, covid_details.disease, covid_details.doctor);
@@ -767,6 +779,5 @@ void exit_function()
 	printf("\t\t\t| |_______________________________________________________________________________________________| |\n");
 	printf("\t\t\t|___________________________________________________________________________________________________|\n\n\n\n");
 	system("pause");
-	return 0;
+	exit(0);
 }
-
