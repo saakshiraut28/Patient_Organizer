@@ -59,7 +59,7 @@ void main_menu()
 	printf("\n\n\t 4. Generate Report ");
 	printf("\n\n\t 5. View Record by ID ");
 	printf("\n\n\t 6. Exit");
-	printf("\n\n\t\t\t Enter your choice (Numerical values expected): ");
+	printf("\n\n\t\t\t Enter your choice (Only Numerical values accpeted): ");
 	scanf("%d", &choice);
 	switch (choice)
 	{
