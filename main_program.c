@@ -32,7 +32,7 @@ void main_main_menu()
 	printf("\n\n\t Contents: ");
 	printf("\n\n\t 1. Main Menu of Normal Patients. ");
 	printf("\n\n\t 2. Main Menu of Covid Patients . ");
-	printf("\n\n\t\t\t Enter your choice(only enter the number of the task to be performed): ");
+	printf("\n\n\t\t\t Enter your choice(Only Numerical values accpeted): ");
 	scanf("%d", &choice);
 	switch (choice)
 	{
@@ -433,7 +433,7 @@ void covid_main_menu()
 	printf("\n\n\t 4. Generate Report ");
 	printf("\n\n\t 5. View Record by ID ");
 	printf("\n\n\t 6. Exit");
-	printf("\n\n\t\t\t Enter your choice(Integer value expected): ");
+	printf("\n\n\t\t\t Enter your choice((Only Numerical values accpeted)): ");
 	scanf("%d", &choice);
 	switch (choice)
 	{
